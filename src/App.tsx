@@ -5,7 +5,7 @@ import { LightTheme } from "./shared/themes";
 
 export const App = () => {
   return (
-    <ThemeProvider theme={LightTheme} >
+    <ThemeProvider theme={LightTheme}>
       <BrowserRouter>
         <AppRoutes />
       </BrowserRouter>
