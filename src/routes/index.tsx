@@ -1,15 +1,15 @@
-import { Button } from "@mui/material";
-import { Routes, Route, Navigate } from "react-router-dom";
-import { useAppThemeContext } from "../shared/contexts";
+import { Button } from '@mui/material';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { useAppThemeContext } from '../shared/contexts';
 
 export const AppRoutes = () =>  {
 
-    const { toggleTheme } = useAppThemeContext();
+  const { toggleTheme } = useAppThemeContext();
 
 
-    return (<Routes>
-        <Route path="/pagina-inicial" element={<p><Button variant="contained" color='primary' onClick={toggleTheme}  >Mudar Tema</Button></p>}/>
-        <Route path="*" element={<Navigate to={"/pagina-inicial"} />} />
-    </Routes>
-    );
-} 
+  return (<Routes>
+    <Route path="/pagina-inicial" element={<p><Button variant="contained" color='primary' onClick={toggleTheme}  >Mudar Tema</Button></p>}/>
+    <Route path="*" element={<Navigate to={'/pagina-inicial'} />} />
+  </Routes>
+  );
+}; 
