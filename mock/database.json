@@ -1,0 +1,15 @@
+{
+    "pessoas": [
+        {
+            "id":1,
+            "nome":"Marcos",
+            "sobrenome":"Costa"
+        }
+    ],
+    "cidades": [
+        {
+            "id": 1,
+            "nome": "Goiânia" 
+        }
+    ]
+}

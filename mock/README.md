@@ -1,0 +1,1 @@
+json-server -w -p 333 ./mock/database.json

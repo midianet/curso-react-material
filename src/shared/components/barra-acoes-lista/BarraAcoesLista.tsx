@@ -1,4 +1,5 @@
 import { Box, Button, Icon, InputAdornment, Paper, TextField, useTheme } from '@mui/material';
+import { Environment } from '../../environment';
 
 interface IBarraAcoesLista{
   textoPesquisa?: string;
@@ -33,7 +34,7 @@ export const BarraAcoesLista: React.FC<IBarraAcoesLista> = ({
           size="small"
           value={textoPesquisa}
           onChange={(e) => eventoPesquisa?.(e.target.value)}
-          placeholder="Pesquisar..."
+          placeholder={Environment.INPUT_DE_BUSCA}
           InputProps={{
             endAdornment: (
               <InputAdornment position='end' >
