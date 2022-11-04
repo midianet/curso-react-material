@@ -11,6 +11,7 @@ interface IBarraAcoesEdicao{
     rotuloNovo?: string;
     prontoNovo?: boolean;
     eventoNovo?: () => void;
+    eventoVoltar?: () => void;
   }
 export const BarraAcoesEdicao: React.FC<IBarraAcoesEdicao> = ({
   mostrarSalvar = false,
@@ -22,7 +23,8 @@ export const BarraAcoesEdicao: React.FC<IBarraAcoesEdicao> = ({
   mostrarNovo = false,
   rotuloNovo = '',
   prontoNovo = false,
-  eventoNovo
+  eventoNovo,
+  eventoVoltar
 }) => {
   const smDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));  
   const mdDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));  
@@ -88,6 +90,7 @@ export const BarraAcoesEdicao: React.FC<IBarraAcoesEdicao> = ({
         disableElevation
         variant="outlined"
         startIcon={<Icon>arrow_back</Icon>}
+        onClick={eventoVoltar}
       >
         <Typography variant="button" whiteSpace="nowrap" textOverflow="ellipsis" overflow="hidden" >Voltar</Typography>
       </Button>        

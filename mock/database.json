@@ -1,15 +1,70 @@
 {
-    "pessoas": [
-        {
-            "id":1,
-            "nome":"Marcos",
-            "sobrenome":"Costa"
-        }
-    ],
-    "cidades": [
-        {
-            "id": 1,
-            "nome": "Goiânia" 
-        }
-    ]
+  "pessoas": [
+    {
+      "id": 1,
+      "nome": "Marcos",
+      "sobrenome": "Costa",
+      "email": "midianet@gmail.com"
+    },
+    {
+      "id": 2,
+      "nome": "Maria",
+      "sobrenome": "Luisa",
+      "email": "malu@gmail.com"
+    },
+    {
+      "id": 3,
+      "nome": "Glauce",
+      "sobrenome": "Lima",
+      "email": "midianet@gmail.com"
+    },
+    {
+      "id": 4,
+      "nome": "Fernanda",
+      "sobrenome": "Silva",
+      "email": "fernanda@gmail.com"
+    },
+    {
+      "id": 6,
+      "nome": "Michele",
+      "sobrenome": "Souza",
+      "email": "michele@gmail.com"
+    },
+    {
+      "id": 7,
+      "nome": "Maisa",
+      "sobrenome": "Gomes",
+      "email": "maisa@gmail.com"
+    },
+    {
+      "id": 9,
+      "nome": "Barbara",
+      "sobrenome": "Souza",
+      "email": "barbara@gmail.com"
+    },
+    {
+      "id": 10,
+      "nome": "Flavia",
+      "sobrenome": "Soares",
+      "email": "flavia@gmail.com"
+    },
+    {
+      "id": 11,
+      "nome": "Elisa",
+      "sobrenome": "Freitas",
+      "email": "elisa@gmail.com"
+    },
+    {
+      "id": 12,
+      "nome": "Cristina",
+      "sobrenome": "Oliveira",
+      "email": "cristina@gmail.com"
+    }
+  ],
+  "cidades": [
+    {
+      "id": 1,
+      "nome": "Goiânia"
+    }
+  ]
 }

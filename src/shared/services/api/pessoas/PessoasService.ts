@@ -1,18 +1,18 @@
 import { Environment } from '../../../environment';
 import { Api } from '../axios-config';
 
-interface IListagemPessoa{
+export interface IListagemPessoa{
     id: number;
     email: string;
     cidadeId: number;
-    nomeCompleto: string;
+    nome: string;
 }
 
-interface IDetalhePessoa{
+export interface IDetalhePessoa{
     id: number;
     email: string;
     cidadeId: number;
-    nomeCompleto: string;
+    nome: string;
 }
 
 type TPessoasComTotalCount = {
@@ -22,7 +22,7 @@ type TPessoasComTotalCount = {
 
 const getAll = async (page = 1, filter = ''): Promise<TPessoasComTotalCount | Error> => {
   try{
-    const url = `/pessoas?_page=${page}&_limit=${Environment.LIMITE_DE_LINHAS}&nomeCompleto_like=${filter}`;
+    const url = `/pessoas?_page=${page}&_limit=${Environment.LIMITE_DE_LINHAS}&nome_like=${filter}`;
     const { data, headers } = await Api.get(url);
     if (data) {
       return {
