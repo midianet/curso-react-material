@@ -1,17 +1,24 @@
-import { LinearProgress } from '@mui/material';
+import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { BarraAcoesEdicao } from '../../shared/components';
 import { VTextField } from '../../shared/forms';
 import { LayoutBase } from '../../shared/layouts';
 import { PessoasService } from '../../shared/services/api/pessoas/PessoasService';
 
+interface IFormData {
+  email: string;
+  cidadeId: number,
+  nome: string
+}
+
 export const DetalhePessoa: React.FC = () => {
   const { id = 'nova' } = useParams<'id'>();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [nome, setNome] = useState('');
+  const formRef = useRef<FormHandles>(null);
   
   useEffect(() => {
     if(id !== 'nova') {
@@ -30,8 +37,8 @@ export const DetalhePessoa: React.FC = () => {
     }
   }, [id]);
 
-  const handleSave = () => {
-    console.log('save');
+  const handleSave = (dados: IFormData ) => {
+    console.log(dados);
   };
 
   const handleDelete = (id: number) => {
@@ -62,20 +69,16 @@ export const DetalhePessoa: React.FC = () => {
           prontoDeletar={!isLoading}
           eventoNovo = {() => navigate('/pessoas/detalhe/nova')}
           eventoVoltar = {() => navigate('/pessoas')}
-          eventoSalvar = {handleSave}
+          eventoSalvar = {() => formRef.current?.submitForm()}
           eventoDeletar = {() => handleDelete(Number(id))}
         />
       }
     >
-      {isLoading &&(
-        <LinearProgress variant='indeterminate' />
-      )}
-      <Form onSubmit={console.log} >
-        <VTextField 
-          name='nome'
-          
-        />
-      </Form>
+      <Form ref={formRef}  onSubmit={handleSave} >
+        <VTextField name='nome'/>
+        <VTextField name='email'/>
+        <VTextField name='cidadeId'/>
+      </Form> 
     </LayoutBase>
   );
 
