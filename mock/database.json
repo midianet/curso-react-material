@@ -62,6 +62,12 @@
       "sobrenome": "Oliveira",
       "email": "cristina@gmail.com",
       "cidadeId": 1
+    },
+    {
+      "nome": "teste",
+      "email": "testse",
+      "cidadeId": "1",
+      "id": 13
     }
   ],
   "cidades": [

@@ -9,8 +9,8 @@ import { PessoasService } from '../../shared/services/api/pessoas/PessoasService
 
 interface IFormData {
   email: string;
-  cidadeId: number,
-  nome: string
+  cidadeId: number;
+  nome: string;
 }
 
 export const DetalhePessoa: React.FC = () => {
@@ -31,7 +31,7 @@ export const DetalhePessoa: React.FC = () => {
             navigate('/pessoas');
           }else{
             setNome(result.nome);
-            console.log(result);
+            formRef.current?.setData(result);
           }
         });
     }
@@ -39,6 +39,28 @@ export const DetalhePessoa: React.FC = () => {
 
   const handleSave = (dados: IFormData ) => {
     console.log(dados);
+    setIsLoading(true);
+    if(id === 'nova'){
+      PessoasService.create(dados)
+        .then((result) => {
+          setIsLoading(false);
+          if(result instanceof Error){
+            alert(result.message);
+          }else{
+            navigate('/pessoas');
+          }
+        });
+    }else{
+      PessoasService.updateById(Number(id), {id: Number(id), ...dados})
+        .then((result) => {
+          setIsLoading(false);
+          if(result instanceof Error){
+            alert(result.message);
+          }else{
+            navigate('/pessoas');
+          }
+        });
+    }
   };
 
   const handleDelete = (id: number) => {
@@ -75,9 +97,9 @@ export const DetalhePessoa: React.FC = () => {
       }
     >
       <Form ref={formRef}  onSubmit={handleSave} >
-        <VTextField name='nome'/>
-        <VTextField name='email'/>
-        <VTextField name='cidadeId'/>
+        <VTextField placeholder="Nome" name="nome"/>
+        <VTextField placeholder="Email" name="email"/>
+        <VTextField placeholder="Cidade" name="cidadeId"/>
       </Form> 
     </LayoutBase>
   );
