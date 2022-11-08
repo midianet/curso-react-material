@@ -10,16 +10,14 @@
     {
       "id": 2,
       "nome": "Maria",
-      "sobrenome": "Luisa",
       "email": "malu@gmail.com",
-      "cidadeId": 1
+      "cidadeId": 2
     },
     {
       "id": 3,
       "nome": "Glauce",
-      "sobrenome": "Lima",
       "email": "midianet@gmail.com",
-      "cidadeId": 1
+      "cidadeId": 5
     },
     {
       "id": 4,
@@ -37,9 +35,8 @@
     },
     {
       "id": 7,
-      "nome": "Maisa",
-      "sobrenome": "Gomes",
-      "email": "maisa@gmail.com",
+      "nome": "Maraisa",
+      "email": "maraisa@gmail.com",
       "cidadeId": 1
     },
     {
@@ -59,21 +56,34 @@
     {
       "id": 12,
       "nome": "Cristina",
-      "sobrenome": "Oliveira",
       "email": "cristina@gmail.com",
-      "cidadeId": 1
-    },
-    {
-      "nome": "teste",
-      "email": "testse",
-      "cidadeId": "1",
-      "id": 13
+      "cidadeId": 2
     }
   ],
   "cidades": [
     {
       "id": 1,
       "nome": "Goiânia"
+    },
+    {
+      "nome": "Ituiutaba",
+      "id": 2
+    },
+    {
+      "nome": "Anápolis",
+      "id": 3
+    },
+    {
+      "nome": "Brasília",
+      "id": 4
+    },
+    {
+      "nome": "Florianopolis",
+      "id": 5
+    },
+    {
+      "nome": "Rio de Janeiro",
+      "id": 6
     }
   ]
 }

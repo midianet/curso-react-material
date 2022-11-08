@@ -1,18 +1,14 @@
 import { Environment } from '../../../environment';
 import { Api } from '../axios-config';
 
-export interface IListagemCidade {
+export interface IListagemCidade{
     id: number;
-    email: string;
-    cidadeId: number;
-    nomeCompleto: string;
+    nome: string;
 }
 
-export interface IDetalheCidade {
+export interface IDetalheCidade{
     id: number;
-    email: string;
-    cidadeId: number;
-    nomeCompleto: string;
+    nome: string;
 }
 
 type TCidadesComTotalCount = {
@@ -81,7 +77,7 @@ const deleteById = async (id: number): Promise<void | Error> => {
   }
 };
 
-export const CidadesService = {
+export const CidadeService = {
   getAll,
   create,
   getById,

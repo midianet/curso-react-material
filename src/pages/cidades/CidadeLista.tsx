@@ -2,18 +2,18 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useMemo, useEffect, useState } from 'react';
 import { BarraAcoesLista } from '../../shared/components';
 import { LayoutBase } from '../../shared/layouts';
-import { IListagemPessoa, PessoasService } from '../../shared/services/api/pessoas/PessoasService';
 import { useDebounce } from '../../shared/hooks';
 import { Icon, IconButton, LinearProgress, Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TableRow } from '@mui/material';
-import { Environment } from '../../shared/environment';
+import { Environment } from '../../shared/environment'; 
+import { CidadeService, IListagemCidade } from '../../shared/services/api/cidades/CidadeService';
 
-export const ListagemPessoa: React.FC = () => {
+export const CidadeLista: React.FC = () => {
   
   const [searchParams, setSearchParams] = useSearchParams();
   const { debounce } = useDebounce(1000);
   const navigate = useNavigate();
 
-  const [rows, setRows] = useState<IListagemPessoa[]>([]);
+  const [rows, setRows] = useState<IListagemCidade[]>([]);
   const [totalCount, setTotalCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -29,7 +29,7 @@ export const ListagemPessoa: React.FC = () => {
   useEffect(() => {
     setIsLoading(true);
     debounce(() => {
-      PessoasService.getAll(pagina, busca)
+      CidadeService.getAll(pagina, busca)
         .then((result) => {
           setIsLoading(false);
           if(result instanceof Error){
@@ -45,7 +45,7 @@ export const ListagemPessoa: React.FC = () => {
 
   const handleDelete = (id: number) => {
     if (confirm('Realmente Deseja Apagar?')){
-      PessoasService.deleteById(id)
+      CidadeService.deleteById(id)
         .then(result => {
           if(result instanceof Error){
             alert(result.message);
@@ -62,12 +62,12 @@ export const ListagemPessoa: React.FC = () => {
   };
 
   return (
-    <LayoutBase titulo="Listagem de Pessoas" toolbar= {
+    <LayoutBase titulo="Listagem de Cidades" toolbar= {
       <BarraAcoesLista
         mostrarPesquisa={true}
         mostrarNovo={true}
         rotuloNovo='Nova'
-        eventoNovo={() => navigate('/pessoas/detalhe/nova')}
+        eventoNovo={() => navigate('/cidades/detalhe/nova')}
         textoPesquisa={busca}
         eventoPesquisa={texto => setSearchParams({busca:texto, pagina: '1'}, {replace: true})}
       />
@@ -76,9 +76,8 @@ export const ListagemPessoa: React.FC = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Ações</TableCell>
-              <TableCell>Nome Completo</TableCell>
-              <TableCell>Email</TableCell>
+              <TableCell sx={{width: '70px'}}>Ações</TableCell>
+              <TableCell>Nome</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -88,12 +87,11 @@ export const ListagemPessoa: React.FC = () => {
                   <IconButton size="small" onClick={() => handleDelete(row.id)}>
                     <Icon>delete</Icon>
                   </IconButton>
-                  <IconButton size="small" onClick={() => navigate(`/pessoas/detalhe/${row.id}`)} >
+                  <IconButton size="small" onClick={() => navigate(`/cidades/detalhe/${row.id}`)} >
                     <Icon>edit</Icon>
                   </IconButton>
                 </TableCell>
                 <TableCell>{row.nome}</TableCell>
-                <TableCell>{row.email}</TableCell>
               </TableRow>
             ))}
           </TableBody>
