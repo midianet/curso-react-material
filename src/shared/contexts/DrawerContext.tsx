@@ -19,7 +19,6 @@ export const useDrawerContext = () => {
   return useContext(DrawerContext);
 };
 
-
 interface IAppThemeProviderProps{
     children: React.ReactNode
 }

@@ -1,7 +1,6 @@
 import { ReactNode } from 'react';
-import { Box } from '@mui/system';
-import { Icon, IconButton, Theme, Typography, useMediaQuery, useTheme } from '@mui/material';
-import { useDrawerContext } from '../contexts';
+import { Icon, IconButton, Theme, Typography, useMediaQuery, useTheme, Box, Alert } from '@mui/material';
+import { useDrawerContext, useMessageContext } from '../contexts';
 
 interface ILayoutBaseProps{
     titulo: string;
@@ -13,6 +12,7 @@ export const LayoutBase: React.FC<ILayoutBaseProps> = ({ children, titulo, toolb
   const mdDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));  
   const theme = useTheme();
   const { toggleDrawerOpen } = useDrawerContext();
+  const {message} = useMessageContext();
 
   return (
     <Box height="100%" display="flex" flexDirection="column" gap={1}>
@@ -34,6 +34,9 @@ export const LayoutBase: React.FC<ILayoutBaseProps> = ({ children, titulo, toolb
       </Box>
       {toolbar && (<Box>
         {toolbar}
+        {message && (
+          <Alert severity={message.level}>{message.message}</Alert>
+        )}
       </Box>
       )}
       <Box flex={1} overflow="auto">

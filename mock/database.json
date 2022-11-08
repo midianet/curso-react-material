@@ -3,7 +3,6 @@
     {
       "id": 1,
       "nome": "Marcos",
-      "sobrenome": "Costa",
       "email": "midianet@gmail.com",
       "cidadeId": 1
     },
@@ -21,43 +20,15 @@
     },
     {
       "id": 4,
-      "nome": "Fernanda",
-      "sobrenome": "Silva",
-      "email": "fernanda@gmail.com",
-      "cidadeId": 1
-    },
-    {
-      "id": 6,
-      "nome": "Michele",
-      "sobrenome": "Souza",
-      "email": "michele@gmail.com",
-      "cidadeId": 1
-    },
-    {
-      "id": 7,
-      "nome": "Maraisa",
-      "email": "maraisa@gmail.com",
-      "cidadeId": 1
-    },
-    {
-      "id": 9,
-      "nome": "Barbara",
-      "sobrenome": "Souza",
-      "email": "barbara@gmail.com",
-      "cidadeId": 1
-    },
-    {
-      "id": 11,
       "nome": "Elisa",
-      "sobrenome": "Freitas",
-      "email": "elisa@gmail.com",
-      "cidadeId": 1
+      "email": "elisa@hotmail.com",
+      "cidadeId": 4
     },
     {
-      "id": 12,
-      "nome": "Cristina",
-      "email": "cristina@gmail.com",
-      "cidadeId": 2
+      "nome": "Ana",
+      "email": "ana@gmail.com",
+      "cidadeId": 2,
+      "id": 5
     }
   ],
   "cidades": [

@@ -4,12 +4,14 @@ import { BarraAcoesEdicao } from '../../shared/components';
 import { LayoutBase } from '../../shared/layouts/LayoutBase';
 import { PessoasService } from '../../shared/services/api/pessoas/PessoasService';
 import { CidadeService } from '../../shared/services/api/cidades/CidadeService';
+import { useMessageContext } from '../../shared/contexts';
 
 export const Dashboard = () => {
   const [isLoadingPessoas, setIsLoadingPessoas] = useState(true);
   const [isLoadingCidades, setIsLoadingCidades] = useState(true);
   const [totalPessoas, setTotalPessoas] = useState(0);
   const [totalCidades, setTotalCidades] = useState(0);
+  const {showMessage} = useMessageContext();
 
   useEffect(() => {
     setIsLoadingPessoas(true);
@@ -17,7 +19,7 @@ export const Dashboard = () => {
       .then((result) => {
         setIsLoadingPessoas(false);
         if(result instanceof Error){
-          alert(result.message);
+          showMessage({message: result.message , level:'error'});
         }else{
           setTotalPessoas(result.totalCount);
         }
@@ -30,7 +32,7 @@ export const Dashboard = () => {
       .then((result) => {
         setIsLoadingCidades(false);
         if(result instanceof Error){
-          alert(result.message);
+          showMessage({message: result.message , level:'error'});
         }else{
           setTotalCidades(result.totalCount);
         }

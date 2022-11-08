@@ -1,14 +1,17 @@
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useMemo, useEffect, useState } from 'react';
-import { BarraAcoesLista } from '../../shared/components';
+import { BarraAcoesLista, DialogoConfirmacao } from '../../shared/components';
 import { LayoutBase } from '../../shared/layouts';
 import { useDebounce } from '../../shared/hooks';
 import { Icon, IconButton, LinearProgress, Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TableRow } from '@mui/material';
 import { Environment } from '../../shared/environment'; 
 import { CidadeService, IListagemCidade } from '../../shared/services/api/cidades/CidadeService';
+import { useMessageContext } from '../../shared/contexts';
 
 export const CidadeLista: React.FC = () => {
   
+  const {showMessage} = useMessageContext();
+
   const [searchParams, setSearchParams] = useSearchParams();
   const { debounce } = useDebounce(1000);
   const navigate = useNavigate();
@@ -16,7 +19,8 @@ export const CidadeLista: React.FC = () => {
   const [rows, setRows] = useState<IListagemCidade[]>([]);
   const [totalCount, setTotalCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-
+  const [isOpenDelete, setIsOpenDelete] = useState<boolean>(false);
+  const [selectedId, setSelectedId] = useState<number>();
 
   const busca = useMemo(() => {
     return searchParams.get('busca') || '';
@@ -33,9 +37,8 @@ export const CidadeLista: React.FC = () => {
         .then((result) => {
           setIsLoading(false);
           if(result instanceof Error){
-            alert(result.message);
+            showMessage({message: result.message , level:'error'});
           }else{
-            console.log(result);
             setRows(result.data);
             setTotalCount(result.totalCount);
           }
@@ -43,22 +46,28 @@ export const CidadeLista: React.FC = () => {
     });
   },[busca, pagina]);
 
-  const handleDelete = (id: number) => {
-    if (confirm('Realmente Deseja Apagar?')){
-      CidadeService.deleteById(id)
+  const onDelete = () => {
+    setIsOpenDelete(false);
+    if(selectedId){
+      CidadeService.deleteById(selectedId)
         .then(result => {
           if(result instanceof Error){
-            alert(result.message);
+            showMessage({message: result.message , level:'error'});
           }else{
             setRows(oldRows => {
               return [ 
-                ...oldRows.filter(oldRow => oldRow.id !== id),
+                ...oldRows.filter(oldRow => oldRow.id !== selectedId),
               ];
             });
-            alert('Registro apagado com sucesso!');
+            showMessage({message:'Registro apagado com sucesso!', level:'success'});
           }
         });
     }
+  };
+
+  const handleDelete = (id: number) => {
+    setSelectedId(id);
+    setIsOpenDelete(true);
   };
 
   return (
@@ -72,6 +81,12 @@ export const CidadeLista: React.FC = () => {
         eventoPesquisa={texto => setSearchParams({busca:texto, pagina: '1'}, {replace: true})}
       />
     }>
+      <DialogoConfirmacao
+        isOpen={isOpenDelete}
+        text="Confirma Exclusão?"
+        handleYes={onDelete}
+        handleNo={setIsOpenDelete}
+      />
       <TableContainer component={Paper} variant="outlined" sx={{m: 1, width: 'auto'}}>
         <Table>
           <TableHead>

@@ -1,12 +1,13 @@
 import { Box, Grid, LinearProgress, Paper, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { BarraAcoesEdicao } from '../../shared/components';
+import { BarraAcoesEdicao, DialogoConfirmacao } from '../../shared/components';
 import { VForm, VTextField, useVForm, IVFormErrors } from '../../shared/forms';
 import { LayoutBase } from '../../shared/layouts';
 import { PessoasService } from '../../shared/services/api/pessoas/PessoasService';
 import  * as yup  from 'yup';
 import { AutoCompleteCidade } from './components/AutoCompleteCidade';
+import { useMessageContext } from '../../shared/contexts';
 
 interface IFormData {
   email: string;
@@ -23,8 +24,10 @@ export const PessoaEditor: React.FC = () => {
   const { id = 'nova' } = useParams<'id'>();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const [nome, setNome] = useState('');
+  const [titulo, setTitulo] = useState('');
   const { formRef, save } = useVForm();
+  const {showMessage} = useMessageContext();
+  const [isOpenDelete, setIsOpenDelete] = useState<boolean>(false);
   
   useEffect(() => {
     if(id !== 'nova') {
@@ -33,10 +36,10 @@ export const PessoaEditor: React.FC = () => {
         .then((result) => {
           setIsLoading(false);
           if (result instanceof Error) {
-            alert(result.message);
+            showMessage({message: result.message , level:'error'});
             navigate('/pessoas');
           }else{
-            setNome(result.nome);
+            setTitulo(result.nome);
             formRef.current?.setData(result);
           }
         });
@@ -50,7 +53,6 @@ export const PessoaEditor: React.FC = () => {
   }, [id]);
 
   const handleSave = (dados: IFormData ) => {
-    console.log(dados);
     formValidationSchema.
       validate(dados, { abortEarly:false })
       .then((dadosValidos) =>{
@@ -60,8 +62,9 @@ export const PessoaEditor: React.FC = () => {
             .then((result) => {
               setIsLoading(false);
               if(result instanceof Error){
-                alert(result.message);
+                showMessage({message: result.message , level:'error'});
               }else{
+                showMessage({message: 'Registro criado com sucesso'  , level:'success'});
                 navigate('/pessoas');
               }
             });
@@ -70,8 +73,9 @@ export const PessoaEditor: React.FC = () => {
             .then((result) => {
               setIsLoading(false);
               if(result instanceof Error){
-                alert(result.message);
+                showMessage({message: result.message , level:'error'});
               }else{
+                showMessage({message: 'Registro alterado com sucesso'  , level:'success'});
                 navigate('/pessoas');
               }
             });
@@ -87,23 +91,26 @@ export const PessoaEditor: React.FC = () => {
       });
   };
 
-  const handleDelete = (id: number) => {
-    if (confirm('Realmente Deseja Apagar?')){
-      PessoasService.deleteById(id)
-        .then(result => {
-          if(result instanceof Error){
-            alert(result.message);
-          }else{
-            alert('Registro apagado com sucesso!');
-            navigate('/pessoas');
-          }
-        });
-    }
+  const onDelete = () => {
+    setIsOpenDelete(false);
+    PessoasService.deleteById(Number(id))
+      .then(result => {
+        if(result instanceof Error){
+          showMessage({message: result.message , level:'error'});
+        }else{
+          showMessage({message:'Registro apagado com sucesso!', level:'success'});
+          navigate('/pessoas');
+        }
+      });
+  };
+
+  const handleDelete = () => {
+    setIsOpenDelete(true);
   };
     
   return (
     <LayoutBase 
-      titulo={id === 'nova' ? 'Nova Pessoa' : nome}
+      titulo={id === 'nova' ? 'Nova Pessoa' : titulo}
       toolbar={
         <BarraAcoesEdicao
           rotuloNovo='Nova'
@@ -116,10 +123,16 @@ export const PessoaEditor: React.FC = () => {
           eventoNovo = {() => navigate('/pessoas/detalhe/nova')}
           eventoVoltar = {() => navigate('/pessoas')}
           eventoSalvar = {save}
-          eventoDeletar = {() => handleDelete(Number(id))}
+          eventoDeletar = {() => handleDelete()}
         />
       }
     >
+      <DialogoConfirmacao
+        isOpen={isOpenDelete}
+        text="Confirma Exclusão?"
+        handleYes={onDelete}
+        handleNo={setIsOpenDelete}
+      />
       <VForm ref={formRef}  onSubmit={handleSave} >
         <Box margin={1} display="flex" flexDirection="column" component={Paper} variant = "outlined">
           <Grid container direction="column" padding={2} spacing={4} >
@@ -137,7 +150,7 @@ export const PessoaEditor: React.FC = () => {
                   label="Nome"
                   disabled={isLoading}
                   placeholder="Nome" 
-                  onChange={e => setNome(e.target.value)}
+                  onChange={e => setTitulo(e.target.value)}
                   name="nome"/>
               </Grid>
             </Grid>

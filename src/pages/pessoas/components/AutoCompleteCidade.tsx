@@ -4,6 +4,7 @@ import { Autocomplete, CircularProgress, TextField } from '@mui/material';
 import { CidadeService } from '../../../shared/services/api/cidades/CidadeService';
 import { useDebounce } from '../../../shared/hooks';
 import { useField } from '@unform/core';
+import { useMessageContext } from '../../../shared/contexts';
 
 
 type TAutoCompleteOption = {
@@ -17,6 +18,7 @@ interface IAutoCompleteCidadeProps {
 export const AutoCompleteCidade: React.FC<IAutoCompleteCidadeProps> = ({ isExternalLoading = false }) => {
   const { fieldName, registerField, defaultValue, error, clearError } = useField('cidadeId');
   const { debounce } = useDebounce();
+  const {showMessage} = useMessageContext();
 
   const [selectedId, setSelectedId] = useState<number | undefined>(defaultValue);
 
@@ -43,8 +45,6 @@ export const AutoCompleteCidade: React.FC<IAutoCompleteCidadeProps> = ({ isExter
           if (result instanceof Error) {
             // alert(result.message);
           } else {
-            console.log(result);
-
             setOpcoes(result.data.map(cidade => ({ id: cidade.id, label: cidade.nome })));
           }
         });
