@@ -11,6 +11,7 @@ interface IBarraAcoesEdicao{
     rotuloNovo?: string;
     prontoNovo?: boolean;
     eventoNovo?: () => void;
+    mostrarVoltar?: boolean;
     eventoVoltar?: () => void;
   }
 export const BarraAcoesEdicao: React.FC<IBarraAcoesEdicao> = ({
@@ -24,6 +25,7 @@ export const BarraAcoesEdicao: React.FC<IBarraAcoesEdicao> = ({
   rotuloNovo = '',
   prontoNovo = false,
   eventoNovo,
+  mostrarVoltar = true,
   eventoVoltar
 }) => {
   const smDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));  
@@ -82,18 +84,19 @@ export const BarraAcoesEdicao: React.FC<IBarraAcoesEdicao> = ({
       {(mostrarNovo && !prontoNovo && !smDown && !mdDown)&& (
         <Skeleton width={110} height={60} />
       )}
-      {(mostrarSalvar || mostrarDeletar || mostrarNovo) && (
+      {(mostrarSalvar || mostrarDeletar || mostrarNovo || mostrarVoltar) && (
         <Divider variant="middle" orientation="vertical" />  
       )}      
-      <Button
-        color="primary"
-        disableElevation
-        variant="outlined"
-        startIcon={<Icon>arrow_back</Icon>}
-        onClick={eventoVoltar}
-      >
-        <Typography variant="button" whiteSpace="nowrap" textOverflow="ellipsis" overflow="hidden" >Voltar</Typography>
-      </Button>        
+      {mostrarVoltar && (
+        <Button
+          color="primary"
+          disableElevation
+          variant="outlined"
+          startIcon={<Icon>arrow_back</Icon>}
+          onClick={eventoVoltar}>
+          <Typography variant="button" whiteSpace="nowrap" textOverflow="ellipsis" overflow="hidden" >Voltar</Typography>
+        </Button>
+      )}        
     </Box>
   );
 };
