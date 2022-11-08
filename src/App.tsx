@@ -8,7 +8,6 @@ import { DrawerProvider } from './shared/contexts/DrawerContext';
 import { AppThemeProvider } from './shared/contexts/ThemeContext';
 import { AuthProvider } from './shared/contexts';
 
-
 export const App = () => {
   return (
     <AuthProvider>
